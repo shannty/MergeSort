@@ -1,0 +1,53 @@
+public class MergeSort {
+
+	int[] values, temp;
+	
+	
+	public MergeSort() {
+		values = null;
+		temp = null;
+	}
+	
+	
+	public void sort(int[] input) {
+		values = input;
+		temp = new int[values.length];
+		mergesort(0,values.length - 1);
+	}	
+	
+	private void mergesort(int first, int second) {
+		if (first < second) {
+			int middle = first + (second - first)/2;
+			mergesort(first, middle);
+			mergesort(middle + 1, second);
+			merge(first, middle, second);
+		}
+	}
+	
+	
+	private void merge (int low, int mid, int high) {
+		for (int i = low; i <=  high; i++) {				// creates our second array (temp)
+			temp[i] = values[i];
+		}
+		
+		int left = low, right = mid + 1, pos = low;		// sets up the indices we will use for the rest of the method
+		
+		while (left <= mid && right <= high) {			// Compares each value in left and right
+			if(temp[left] <= temp[right]) {				// left item is smaller
+				values[pos] = temp[left];
+				left++;
+			}
+			else {										// right item is smaller
+				values[pos] = temp[right];
+				right++;
+			}
+			pos++;
+		}
+		
+		while (left <= mid) {					// Copies the rest of the left side of the array into the values array
+			values[pos] = temp[left];
+			pos++;
+			left++;
+		}
+	}
+}
